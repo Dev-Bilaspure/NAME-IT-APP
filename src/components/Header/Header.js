@@ -20,6 +20,8 @@ const Header = (props) => {
             >
                 {props.headerText}
             </h1>
+
+            <p className="head-line">Let's name your silly startup idea!</p>
         </div>
     );
 }
