@@ -3,24 +3,27 @@ import Header from '../Header/Header'
 import './App.css';
 import SearchBox from '../SearchBox/SearchBox';
 import ResultsContainer from '../ResultsContainer/ResultsContainer';
+import {useState} from 'react';
 
 const name = require('@rstacruz/startup-name-generator');
 
-class App extends React.Component {
-    state = {
+
+const App = () => {
+
+    const [myState,setMyState] = useState({
         headerText: "Name It!",
         searchText: undefined,
-        suggestedNames: []
-    }
+        suggetedNames: []
+    });
 
-    handleInputChange = (keyword) => {
+    const handleInputChange = (keyword) => {
 
-        this.setState(() => {
-            return ({
-                searchText: keyword,
-                suggestedNames: []
-            });
+        setMyState({
+            headerText: "Name It!",
+            searchText: keyword,
+            suggetedNames: []
         });
+
         if (keyword.length > 0) {
 
             let names = name(keyword);
@@ -32,30 +35,28 @@ class App extends React.Component {
                 }
             });
 
-            this.setState(() => {
-                return ({
-                    suggestedNames: uniqueNames
-                });
+            setMyState({
+                headerText: "Name It!",
+                searchText: keyword,
+                suggetedNames: uniqueNames
             });
         }
     }
 
-    render() {
-        return (
-            <div>
-                <Header
-                    headerText={this.state.headerText}
-                    searchText={this.state.searchText}
-                />
-                <SearchBox
-                    handleInputChange={this.handleInputChange}
-                />
-                <ResultsContainer
-                    suggestedNames={this.state.suggestedNames}
-                />
-            </div>
-        );
-    }
+    return (
+        <div>
+            <Header
+                headerText={myState.headerText}
+                searchText={myState.searchText}
+            />
+            <SearchBox
+                handleInputChange={handleInputChange}
+            />
+            <ResultsContainer
+                suggestedNames={myState.suggetedNames}
+            />
+        </div>
+    );
 }
 
 export default App;
